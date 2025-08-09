@@ -252,7 +252,6 @@ class SpotifyScout:
                 print(
                     f"Calling {subscriber_name} at {subscriber_phone} about recent physics episodes"
                 )
-                print(f"Episodes to report: {len(episodes)} episodes from past week")
 
                 # Make the call
                 call_result = vapi_caller.make_call_with_variables(

@@ -90,6 +90,11 @@ async def run_spotify_scout():
         # Report results (make Vapi calls)
         report_success = scout.report_results()
         print("Spotify scout completed")
+        if scout.status == "error":
+            return {
+                "success": False,
+                "message": scout.error_message,
+            }
         return {
             "success": report_success,
             "message": f"Spotify scout completed. Found {len(episodes)} recent physics episodes.",
@@ -157,6 +162,11 @@ async def run_birthday_scout():
         # Report results (make Vapi calls)
         report_success = scout.report_results()
         print("Birthday scout completed")
+        if scout.status == "error":
+            return {
+                "success": False,
+                "message": scout.error_message,
+            }
         return {
             "success": report_success,
             "message": f"Birthday scout completed. Found {len(todays_birthdays)} birthdays today.",
