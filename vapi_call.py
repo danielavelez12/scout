@@ -20,68 +20,6 @@ class VapiCaller:
             "Content-Type": "application/json",
         }
 
-    def make_call(
-        self,
-        phone_number: str,
-        customer_name: Optional[str] = None,
-        call_name: Optional[str] = None,
-        **kwargs,
-    ) -> Dict[str, Any]:
-        """
-        Make a call using Vapi API
-
-        Args:
-            phone_number: The phone number to call
-            customer_name: Name of the customer (optional)
-            call_name: Name for the call (optional)
-            **kwargs: Additional parameters to pass to the API
-
-        Returns:
-            API response as dictionary
-        """
-        # Prepare the request payload according to Vapi API documentation
-        payload = {
-            "assistantId": self.assistant_id,
-            "phoneNumberId": "5dece6ec-fcbb-40cb-9a63-1be05cdea6f9",
-            "customer": {"number": f"+1{phone_number}"},  # Add +1 prefix for US numbers
-            "type": "outboundPhoneCall",
-            "assistantOverrides": {
-                "variableValues": {
-                    "userFirstName": "Daniela",
-                    "birthdayFirstName": "Ashley",
-                }
-            },
-        }
-
-        # Add optional parameters
-        if call_name:
-            payload["name"] = call_name
-
-        # Add any additional parameters
-        payload.update(kwargs)
-
-        # Debug: print the payload being sent
-        print(f"Debug - Payload being sent: {json.dumps(payload, indent=2)}")
-
-        try:
-            response = requests.post(
-                f"{self.base_url}/call", headers=self.headers, json=payload
-            )
-
-            response.raise_for_status()
-            return response.json()
-
-        except requests.exceptions.RequestException as e:
-            return {
-                "error": True,
-                "message": str(e),
-                "status_code": (
-                    getattr(e.response, "status_code", None)
-                    if hasattr(e, "response")
-                    else None
-                ),
-            }
-
     def make_call_with_variables(
         self,
         phone_number: str,
@@ -106,7 +44,7 @@ class VapiCaller:
         # Prepare the request payload according to Vapi API documentation
         payload = {
             "assistantId": self.assistant_id,
-            "phoneNumberId": "5dece6ec-fcbb-40cb-9a63-1be05cdea6f9",
+            "phoneNumberId": "43ed3451-7453-4681-aa40-ab8754875a2d",
             "customer": {"number": f"+1{phone_number}"},  # Add +1 prefix for US numbers
             "type": "outboundPhoneCall",
             "assistantOverrides": {"variableValues": variable_values},
@@ -169,4 +107,3 @@ class VapiCaller:
                     else None
                 ),
             }
-
