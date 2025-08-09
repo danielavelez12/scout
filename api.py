@@ -64,7 +64,6 @@ async def run_birthday_scout():
                 content={
                     "success": False,
                     "error": "Vapi not configured. Check environment variables.",
-                    "scout_summary": scout.get_summary(),
                 },
             )
 
@@ -74,7 +73,6 @@ async def run_birthday_scout():
             return {
                 "success": False,
                 "message": "No birthdays found in spreadsheet",
-                "scout_summary": scout.get_summary(),
             }
 
         # Check for today's birthdays
@@ -84,7 +82,6 @@ async def run_birthday_scout():
                 "success": True,
                 "message": "No birthdays today",
                 "todays_birthdays": [],
-                "scout_summary": scout.get_summary(),
             }
 
         # Report results (make Vapi calls)
@@ -94,7 +91,6 @@ async def run_birthday_scout():
             "success": report_success,
             "message": f"Birthday scout completed. Found {len(todays_birthdays)} birthdays today.",
             "todays_birthdays": todays_birthdays,
-            "scout_summary": scout.get_summary(),
         }
 
     except Exception as e:
@@ -103,6 +99,5 @@ async def run_birthday_scout():
             content={
                 "success": False,
                 "error": f"Internal server error: {str(e)}",
-                "scout_summary": None,
             },
         )

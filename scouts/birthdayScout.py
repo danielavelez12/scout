@@ -275,26 +275,6 @@ class BirthdayScout:
             self.status = "error"
             return False
 
-    def get_summary(self) -> Dict[str, Any]:
-        """
-        Get a summary of the scout's status and results.
-
-        Returns:
-            Dict[str, Any]: Summary information
-        """
-        todays_birthdays = self.get_todays_birthdays()
-        return {
-            "status": self.status,
-            "error_message": self.error_message,
-            "total_birthdays": len(self.results),
-            "todays_birthdays": len(todays_birthdays),
-            "todays_birthday_names": [b.get("name", "") for b in todays_birthdays],
-            "subscribers_count": len(self.subscribers),
-            "subscribers": self.subscribers,
-            "vapi_configured": self.check_vapi_config(),
-            "results": self.results,
-        }
-
 
 def fetch_birthdays_from_sheet(
     service_account_file: str, spreadsheet_url: str
