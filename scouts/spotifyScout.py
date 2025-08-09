@@ -27,7 +27,7 @@ class SpotifyScout:
         self.results = []
         self.status = "idle"
         self.error_message = None
-        self.subscribers = [{"name": "Daniela", "phone": "9549559235"}]
+        self.subscribers = [{"name": "Daniela", "phone": "9545318731"}]
 
         # Spotify configuration from environment variables
         self.spotify_client_id = os.getenv("SPOTIFY_CLIENT_ID")
