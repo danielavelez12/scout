@@ -5,7 +5,7 @@ services:
     env: python # Change this to your language (node, python, go, etc.)
     plan: free # Change to 'starter', 'standard', or 'pro' for paid plans
     buildCommand: pip install -r requirements.txt # Adjust based on your language
-    startCommand: python app.py # Adjust based on your entry point
+    startCommand: uvicorn api:app --host 0.0.0.0 --port $PORT # Adjust based on your entry point
     envVars:
       - key: PYTHON_VERSION
         value: 3.9.0
