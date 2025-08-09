@@ -4,7 +4,7 @@ from typing import Optional, Dict, Any
 
 
 class VapiCaller:
-    def __init__(self, private_api_key: str, assistant_id: str):
+    def __init__(self, private_api_key: str, assistant_id: str, phone_number_id: str):
         """
         Initialize VapiCaller with API credentials
 
@@ -15,6 +15,7 @@ class VapiCaller:
         self.base_url = "https://api.vapi.ai"
         self.private_api_key = private_api_key
         self.assistant_id = assistant_id
+        self.phone_number_id = phone_number_id
         self.headers = {
             "Authorization": f"Bearer {private_api_key}",
             "Content-Type": "application/json",
@@ -25,7 +26,6 @@ class VapiCaller:
         phone_number: str,
         variable_values: Dict[str, Any],
         customer_name: Optional[str] = None,
-        call_name: Optional[str] = None,
         **kwargs,
     ) -> Dict[str, Any]:
         """
@@ -44,15 +44,11 @@ class VapiCaller:
         # Prepare the request payload according to Vapi API documentation
         payload = {
             "assistantId": self.assistant_id,
-            "phoneNumberId": "43ed3451-7453-4681-aa40-ab8754875a2d",
+            "phoneNumberId": self.phone_number_id,
             "customer": {"number": f"+1{phone_number}"},  # Add +1 prefix for US numbers
             "type": "outboundPhoneCall",
             "assistantOverrides": {"variableValues": variable_values},
         }
-
-        # Add optional parameters
-        if call_name:
-            payload["name"] = call_name
 
         # Add any additional parameters
         payload.update(kwargs)
