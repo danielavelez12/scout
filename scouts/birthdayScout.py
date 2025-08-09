@@ -253,7 +253,6 @@ class BirthdayScout:
                 call_result = vapi_caller.make_call_with_variables(
                     phone_number=subscriber_phone,
                     variable_values=variable_values,
-                    call_name=f"Birthday Alert: {len(todays_birthdays)} birthdays today",
                 )
 
                 if call_result.get("error"):

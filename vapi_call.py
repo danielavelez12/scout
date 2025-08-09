@@ -25,7 +25,6 @@ class VapiCaller:
         self,
         phone_number: str,
         variable_values: Dict[str, Any],
-        customer_name: Optional[str] = None,
         **kwargs,
     ) -> Dict[str, Any]:
         """
@@ -34,8 +33,6 @@ class VapiCaller:
         Args:
             phone_number: The phone number to call
             variable_values: Dictionary of variable values for template replacement
-            customer_name: Name of the customer (optional)
-            call_name: Name for the call (optional)
             **kwargs: Additional parameters to pass to the API
 
         Returns:
