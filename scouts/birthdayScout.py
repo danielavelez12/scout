@@ -38,7 +38,8 @@ class BirthdayScout:
         self.subscribers = [{"name": "Daniela", "phone": "9549559235"}]
         # Vapi configuration from environment variables
         self.vapi_private_api_key = os.getenv("PRIVATE_API_KEY")
-        self.vapi_assistant_id = os.getenv("ASSISTANT_ID")
+        self.vapi_assistant_id = os.getenv("BIRTHDAY_REPORTER_ASSISTANT_ID")
+        self.vapi_phone_number_id = os.getenv("BIRTHDAY_REPORTER_PHONE_NUMBER_ID")
 
     def _initialize_gspread(self):
         """
@@ -207,6 +208,7 @@ class BirthdayScout:
             self.status = "reporting"
 
             if not self.check_vapi_config():
+                print("Vapi not configured")
                 self.status = "error"
                 return False
 
