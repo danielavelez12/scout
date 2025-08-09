@@ -1,0 +1,21 @@
+services:
+  # Main API service
+  - type: web
+    name: api-service
+    env: python # Change this to your language (node, python, go, etc.)
+    plan: free # Change to 'starter', 'standard', or 'pro' for paid plans
+    buildCommand: pip install -r requirements.txt # Adjust based on your language
+    startCommand: python app.py # Adjust based on your entry point
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.9.0
+      # Add your environment variables here
+      # - key: DATABASE_URL
+      #   value: postgresql://user:password@host:port/database
+      # - key: API_KEY
+      #   fromService:
+      #     type: secret
+      #     name: api-secret
+    healthCheckPath: /health # Optional: health check endpoint
+    autoDeploy: true # Set to false if you want manual deployments
+    pullRequestPreviewsEnabled: false # Set to true if you want preview deployments for PRs
