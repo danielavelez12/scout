@@ -87,23 +87,13 @@ async def run_spotify_scout():
                 "episodes": [],
             }
 
-        # Get recent episodes (from the past week)
-        recent_episodes = scout.get_recent_episodes()
-        if not recent_episodes:
-            print("No recent physics episodes")
-            return {
-                "success": True,
-                "message": "No recent physics episodes found",
-                "episodes": [],
-            }
-
         # Report results (make Vapi calls)
         report_success = scout.report_results()
         print("Spotify scout completed")
         return {
             "success": report_success,
-            "message": f"Spotify scout completed. Found {len(recent_episodes)} recent physics episodes.",
-            "episodes": recent_episodes,
+            "message": f"Spotify scout completed. Found {len(episodes)} recent physics episodes.",
+            "episodes": episodes,
         }
 
     except Exception as e:

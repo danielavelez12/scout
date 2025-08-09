@@ -153,6 +153,7 @@ class BirthdayScout:
             ):
                 todays_birthdays.append(birthday)
 
+        self.results = todays_birthdays
         return todays_birthdays
 
     def check_vapi_config(self) -> bool:
@@ -217,20 +218,16 @@ class BirthdayScout:
                 self.status = "error"
                 return False
 
-            # Get today's birthdays
-            todays_birthdays = self.get_todays_birthdays()
-
-            if not todays_birthdays:
-                print("No birthdays today to report")
-                self.status = "completed"
-                return True
-
             # Format birthdays for the prompt
-            birthdays_text = self.format_birthdays_for_prompt(todays_birthdays)
+            birthdays_text = self.format_birthdays_for_prompt(self.results)
             print(f"Today's birthdays: {birthdays_text}")
 
             # Initialize Vapi caller
-            vapi_caller = VapiCaller(self.vapi_private_api_key, self.vapi_assistant_id)
+            vapi_caller = VapiCaller(
+                self.vapi_private_api_key,
+                self.vapi_assistant_id,
+                self.vapi_phone_number_id,
+            )
 
             # Report to each subscriber
             for subscriber in self.subscribers:

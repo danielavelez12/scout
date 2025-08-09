@@ -133,17 +133,6 @@ class SpotifyScout:
             self.status = "error"
             return []
 
-    def get_recent_episodes(self) -> List[Dict[str, Any]]:
-        """
-        Get episodes released in the past week from the results.
-        Note: This method now just returns the results since filtering is done at fetch time.
-
-        Returns:
-            List[Dict[str, Any]]: List of recent episodes
-        """
-        # Since fetch_physics_episodes now filters by date, just return the results
-        return self.results
-
     def check_spotify_config(self) -> bool:
         """
         Check if Spotify is properly configured with environment variables.
@@ -229,31 +218,21 @@ class SpotifyScout:
                 self.status = "error"
                 return False
 
-            if not self.check_spotify_config():
-                print("Spotify not configured")
-                self.status = "error"
-                return False
-
             if not self.subscribers:
                 self.error_message = "No subscribers to report to"
                 self.status = "error"
                 return False
 
-            # Fetch physics episodes (already filtered for past 7 days)
-            episodes = self.fetch_physics_episodes()
-
-            if not episodes:
-                print("No physics episodes found in the past 7 days")
-                self.status = "completed"
-                return True
-
             # Format episodes for the prompt
-            episodes_text = self.format_episodes_for_prompt(episodes)
-            print(f"Recent physics episodes: {len(episodes)} found")
+            episodes_text = self.format_episodes_for_prompt(self.results)
             print(f"Episodes to report: {episodes_text}")
 
             # Initialize Vapi caller
-            vapi_caller = VapiCaller(self.vapi_private_api_key, self.vapi_assistant_id)
+            vapi_caller = VapiCaller(
+                self.vapi_private_api_key,
+                self.vapi_assistant_id,
+                self.vapi_phone_number_id,
+            )
 
             # Report to each subscriber
             for subscriber in self.subscribers:
